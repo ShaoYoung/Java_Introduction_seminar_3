@@ -8,7 +8,7 @@ public class Task_3_1 {
     public static void main(String[] args) {
 
         List<Byte> list = new ArrayList<Byte>();
-        for (int i = 0; i < 10; i++) {
+        for (byte i = 0; i < 10; i++) {
             list.add((byte) (Math.random() * 100));
         }
         System.out.println(list);

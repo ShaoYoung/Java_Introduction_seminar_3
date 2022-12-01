@@ -15,10 +15,10 @@ public class SolutionHW_3_3 {
         System.out.printf("Минимальное значение из списка %d\n", Collections.min(listNumbers));
         System.out.printf("Максимальное значение из списка %d\n", Collections.max(listNumbers));
         double sum = 0;
-        for (byte element: listNumbers) {
-            sum+=element;
+        for (byte element : listNumbers) {
+            sum += element;
         }
-        System.out.printf("Среднее значение элементов списка %.2f\n", sum/listNumbers.size());
+        System.out.printf("Среднее значение элементов списка %.2f\n", sum / listNumbers.size());
 
     }
 }

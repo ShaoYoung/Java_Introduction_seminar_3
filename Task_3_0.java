@@ -11,11 +11,11 @@ public class Task_3_0 {
         String s5 = new String("hello");
         String s6 = new String(new char[]{'h', 'e', 'l', 'l', 'o'});
 
-        System.out.println(s1==s2);
-        System.out.println(s1==s3);
-        System.out.println(s1==s4);
-        System.out.println(s1==s5);
-        System.out.println(s1==s6);
+        System.out.println(s1 == s2);
+        System.out.println(s1 == s3);
+        System.out.println(s1 == s4);
+        System.out.println(s1 == s5);
+        System.out.println(s1 == s6);
         System.out.println();
 
         System.out.println(s1.equals(s2));
@@ -32,7 +32,6 @@ public class Task_3_0 {
         System.out.println(s4);
         System.out.println(s5);
         System.out.println(s6);
-
 
 
     }

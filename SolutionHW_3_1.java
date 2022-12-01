@@ -2,12 +2,11 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class SolutionHW_3_1 {
 
-//    сортировка слиянием двух массивов
+    //    сортировка слиянием двух сортированных массивов
     public static byte[] mergeSortTwoArrays(byte[] arrayA, byte[] arrayB) {
         byte[] arrayC = new byte[arrayA.length + arrayB.length];
         byte a = 0, b = 0;
@@ -29,42 +28,44 @@ public class SolutionHW_3_1 {
         return arrayC;
     }
 
-    public static List<byte[]> mergeSort(List<byte[]>listArrays){
-        List<byte[]> listArr = new ArrayList<>();
-        if (listArrays.size()==2){
-            listArr.add(mergeSortTwoArrays(listArrays.get(0), listArrays.get(1)));
-            return listArr;
-        } else {
-            int mid = listArrays.size() / 2;
 
-//            ПОДУМАТЬ, КАК ОПТИМАЛЬНО СОЕДИНИТЬ МАССИВЫ
-
+    public static byte[] mergeSort(List<byte[]> listArrays) {
+        if (listArrays.size() < 2) return listArrays.get(0);
+        byte[] arr = listArrays.get(0);
+// проход и сортировка (со слиянием) по всему списку отсортированных массивов
+        for (int i = 1; i < listArrays.size(); i++) {
+            arr = mergeSortTwoArrays(arr, listArrays.get(i));
         }
-        return listArr;
+        return arr;
     }
 
 
-//    разбивает массив на список массивов длиной 2, один массив может оказаться длиной 1
+    //  рекурсивно разбивает массив на список массивов длиной 2 и 1. каждый массив длиной 2 перед записью сортируется.
     public static List<byte[]> splitArray(byte[] array) {
+        // т.к. количество массивов длиной 1 и 2 неизвестно, используем список
         List<byte[]> listArrays = new ArrayList<>();
+        // добавление массива из одного элемента в список. выход из рекурсии 1.
         if (array.length == 1) {
             listArrays.add(array);
             return listArrays;
         } else if (array.length == 2) {
-//            сортировка
-            if (array[0]>array[1]){
+//            сортировка массива из двух элементов. выход из рекурсии 2
+            if (array[0] > array[1]) {
                 byte temp = array[0];
                 array[0] = array[1];
                 array[1] = temp;
             }
+            // добавляем сортированный массив в список.
             listArrays.add(array);
             return listArrays;
         } else {
+            // делим массив на 2 части
             int mid = array.length / 2;
             byte[] arrLeft = new byte[mid];
             System.arraycopy(array, 0, arrLeft, 0, mid);
             byte[] arrRight = new byte[array.length - mid];
             System.arraycopy(array, mid, arrRight, 0, array.length - mid);
+            // рекурсия. в список добавляется левая и правая части массива
             listArrays.addAll(splitArray(arrLeft));
             listArrays.addAll(splitArray(arrRight));
             return listArrays;
@@ -72,38 +73,20 @@ public class SolutionHW_3_1 {
     }
 
     public static void main(String[] args) {
-
-//        byte[] arrayA = new byte[5];
-        byte[] arrayA = {18, 4, 8, 6, 13, 12, 14, 16, 18};
-//        byte[] arrayB = new byte[7];
-        byte[] arrayB = {3, 5, 7};
-
-//        for (byte i = 0; i < arrayB.length; i++) {
-//            arrayB[i] = (byte) (Math.random() * Byte.MAX_VALUE);
-//            if (i < arrayA.length) arrayA[i] = (byte) (Math.random() * Byte.MAX_VALUE);
-//        }
-
-
-//        System.out.println(Arrays.toString(arrayA));
-//        System.out.println(Arrays.toString(arrayB));
-//
-//        List<byte[]> listArrays = new ArrayList<>();
-//        listArrays.add(arrayA);
-//        listArrays.add(arrayB);
-//
-//
-//        byte[] arrayC = mergeSort(listArrays.get(0), listArrays.get(1));
-//        System.out.println(Arrays.toString(arrayC));
-        List<byte[]> listArrays;
-        listArrays = splitArray(arrayB);
-        for (byte[] arr:listArrays) {
-            System.out.println(Arrays.toString(arr));
+// генерация массива случайных чисел (byte)
+        byte[] randomArray = new byte[20];
+        for (byte i = 0; i < randomArray.length; i++) {
+            randomArray[i] = (byte) (Math.random() * Byte.MAX_VALUE);
         }
-        listArrays = mergeSort(listArrays);
-        for (byte[] arr:listArrays) {
-            System.out.println(Arrays.toString(arr));
+        System.out.printf("Исходный массив %s\n", Arrays.toString(randomArray));
+// разбиваем исходный массив на массивы длиной 2 и 1
+        List<byte[]> listArrays = splitArray(randomArray);
+        System.out.print("Массивы после разделения:");
+        for (byte[] arr : listArrays) {
+            System.out.printf(" %s ", Arrays.toString(arr));
         }
+        System.out.println();
 
-
+        System.out.printf("Сортированный массив %s\n", Arrays.toString(mergeSort(listArrays)));
     }
 }
